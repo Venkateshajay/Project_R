@@ -16,10 +16,6 @@ public class EnemyFollow : MonoBehaviour
     [SerializeField] Transform PlayerPosition;
     [SerializeField] Transform Range;
 
-    [Header("Collider")]
-    [SerializeField] PolygonCollider2D left;
-    [SerializeField] PolygonCollider2D right;
-
     [Header("Bool")]
     bool atRange=false;
     bool isEnemySeenThePlayer = false;
@@ -32,6 +28,7 @@ public class EnemyFollow : MonoBehaviour
     [SerializeField] GameObject PlayUI;
     void Start()
     {
+
         playerMovementScript = FindObjectOfType<PlayerMovement>();
     }
     void FixedUpdate()
@@ -80,25 +77,30 @@ public class EnemyFollow : MonoBehaviour
         {
             transform.position = Vector2.MoveTowards(transform.position, Range.position, idleSpeed * Time.deltaTime);
             isAtRange();
-            left.enabled = true;
-            right.enabled = false;
+            //left.enabled = true;
+            //right.enabled = false;
+            //transform.Rotate(0f, 180f, 0f);
+            transform.rotation = Range.rotation;
         }
         else
         {
             EnemyReturn();
             isAtRange();
-            right.enabled = true;
-            left.enabled = false;
+            //transform.Rotate(0f, 0f, 0f);
+            //right.enabled = true;
+            //left.enabled = false;
+            transform.rotation= EnemyPosition.rotation;
+
         }
     }
 
     void EnemyChase()
     {
-        if (left.enabled == true)
+        if (!atRange)
         {
             transform.position = Vector2.MoveTowards(transform.position, PlayerPosition.position + new Vector3(1, 0, 0), speed * Time.deltaTime);
         }
-        if (left.enabled == false)
+        if (atRange)
         {
             transform.position = Vector2.MoveTowards(transform.position, PlayerPosition.position - new Vector3(1, 0, 0), speed * Time.deltaTime);
         }
