@@ -37,6 +37,14 @@ public class PlayerMovement : MonoBehaviour
         if (canMove)
         {
             MoveDirection = new Vector2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical"));
+            if(MoveDirection.x > 0f)
+            {
+                transform.localScale = new Vector3(1.5f,1.5f,1f);
+            }
+            if(MoveDirection.x <0)
+            {
+                transform.localScale = new Vector3(-1.5f, 1.5f, 1f);
+            }
             MoveDirection *= speed;
             PlayerRigidbody.velocity = new Vector3(MoveDirection.x, MoveDirection.y, 0);
         }
